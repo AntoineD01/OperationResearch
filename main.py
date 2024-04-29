@@ -6,10 +6,9 @@ def main():
         filename = 'table'+nb_table+'.txt'
         #filename = 'table1.txt'  
         table_data = f.read_table(filename)
-        print(table_data)
         f.display_table(table_data)
-        nw_matrice = f.north_west_corner_method(table_data)
-        print(nw_matrice)
+        #nw_matrice = f.north_west_corner_method(table_data)
+        f.vogels_approximation_method(table_data)
         
         
         

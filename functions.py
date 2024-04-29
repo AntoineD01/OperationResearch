@@ -74,11 +74,60 @@ def north_west_corner_method(table_data):
         else:
             col_index += 1
 
-        print("\nVoici row_index = ", row_index)
-        print("\nVoici col_index = ", col_index)
-
         # Display the updated table
         display_table(new_matrice)
 
     # Return the updated matrix
     return new_matrice
+
+def vogels_approximation_method(table_data):
+    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
+    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Orders)
+    max_colum = []
+    max_row = []
+    min_colum = []
+    min_row = []
+    difference_colum = []
+    difference_row = []
+    
+    # Find the maximum value in each column
+    for i in range(max_columns):
+        max_value = float('-inf')  
+        for row in table_data[:-1]:
+            if row[i] > max_value:
+                max_value = row[i]
+        max_colum.append(max_value)
+    
+    # Find the maximum value in each row
+    for i in range(max_rows):
+        max_value = float('-inf')  
+        for column in table_data[i][:-1]:
+            if column > max_value:
+                max_value = column
+        max_row.append(max_value)
+    
+    # Find the minimum value in each column
+    for i in range(max_columns):
+        min_value = float('inf')  
+        for row in table_data[:-1]:
+            if row[i] < min_value:
+                min_value = row[i]
+        min_colum.append(min_value)
+    
+    # Find the minimum value in each row
+    for i in range(max_rows):
+        min_value = float('inf')  
+        for column in table_data[i][:-1]:
+            if column < min_value:
+                min_value = column
+        min_row.append(min_value)
+        
+    # Calculate the differences between the maximum and minimum values in each column
+    difference_colum = [max_colum[i] - min_colum[i] for i in range(max_columns)]
+    
+    # Calculate the differences between the maximum and minimum values in each row
+    difference_row = [max_row[i] - min_row[i] for i in range(max_rows)]
+
+    print("Difference in each column:", difference_colum)
+    print("Difference in each row:", difference_row)
+
