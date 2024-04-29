@@ -124,7 +124,7 @@ def mini_row(table_data):
         min_row.append(min_value)
     return min_row
 
-def max_difference(table_data):
+def max_difference(table_data): #return the position of the maximum difference of penalty 
     max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
     max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Provision)
     difference_colum = []
@@ -157,3 +157,13 @@ def max_difference(table_data):
     
     return max_diff_type, max_diff_index, max_diff
 
+def find_cell(max_diff_type, max_diff_index, table_data):
+    if max_diff_type == 'row':
+        min_value = min(table_data[max_diff_index][:-1])
+        min_index = table_data[max_diff_index][:-1].index(min_value)
+        return max_diff_index, min_index
+    else:
+        min_value = min(row[max_diff_index] for row in table_data[:-1])
+        for i, row in enumerate(table_data[:-1]):
+            if row[max_diff_index] == min_value:
+                return i, max_diff_index
