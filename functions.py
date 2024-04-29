@@ -80,54 +80,71 @@ def north_west_corner_method(table_data):
     # Return the updated matrix
     return new_matrice
 
-def vogels_approximation_method(table_data):
-    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
-    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Orders)
+def max_column(table_data):
+    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Provision)
     max_colum = []
-    max_row = []
-    min_colum = []
-    min_row = []
-    difference_colum = []
-    difference_row = []
-    
-    # Find the maximum value in each column
     for i in range(max_columns):
         max_value = float('-inf')  
         for row in table_data[:-1]:
             if row[i] > max_value:
                 max_value = row[i]
         max_colum.append(max_value)
-    
-    # Find the maximum value in each row
+    return max_colum
+
+def mx_row(table_data):
+    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
+    max_row = []
     for i in range(max_rows):
         max_value = float('-inf')  
         for column in table_data[i][:-1]:
             if column > max_value:
                 max_value = column
         max_row.append(max_value)
-    
-    # Find the minimum value in each column
+    return max_row
+
+def mini_col(table_data):
+    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Provision)
+    min_colum = []
     for i in range(max_columns):
         min_value = float('inf')  
         for row in table_data[:-1]:
             if row[i] < min_value:
                 min_value = row[i]
         min_colum.append(min_value)
-    
-    # Find the minimum value in each row
+    return min_colum
+
+def mini_row(table_data):
+    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
+    min_row = []
     for i in range(max_rows):
         min_value = float('inf')  
         for column in table_data[i][:-1]:
             if column < min_value:
                 min_value = column
         min_row.append(min_value)
-        
+    return min_row
+
+def vogels_approximation_method(table_data):
+    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
+    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Provision)
+    difference_colum = []
+    difference_row = []
+    
+    
+    max_colum = max_column(table_data)
+    max_row = mx_row(table_data)
+    min_colum = mini_col(table_data)
+    min_row = mini_row(table_data)
+
     # Calculate the differences between the maximum and minimum values in each column
     difference_colum = [max_colum[i] - min_colum[i] for i in range(max_columns)]
     
     # Calculate the differences between the maximum and minimum values in each row
     difference_row = [max_row[i] - min_row[i] for i in range(max_rows)]
 
-    print("Difference in each column:", difference_colum)
-    print("Difference in each row:", difference_row)
+    # Find the maximum value from both the difference columns and difference rows
+    max_diff = max(max(difference_colum), max(difference_row))
+    
+    print("Maximum difference in columns and rows:", max_diff)
+
 
