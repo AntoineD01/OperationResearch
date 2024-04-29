@@ -38,13 +38,23 @@ def display_table(table_data):
         print(f'{table_data[-1][j]:5}', end='')
     print()  # Add a new line for formatting
 
+
 def north_west_corner_method(table_data):
-    max_rows = min(len(table_data) - 1, 20)  # Exclude the last row (Orders)
-    max_columns = min(len(table_data[0]) - 1, 12)  # Exclude the last column (Orders)
+    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
+    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Orders)
 
     # Initialize the indices for the northwest corner of the matrix
     row_index = 0
     col_index = 0
+
+    new_matrice = table_data
+    
+    # Change each value to 0 except the last line and last column
+    for i in range(max_rows):
+        for j in range(max_columns):
+            new_matrice[i][j] = 0
+    
+    display_table(new_matrice)
 
     # Iterate until we reach the last row or column
     while row_index < max_rows and col_index < max_columns:
@@ -52,17 +62,23 @@ def north_west_corner_method(table_data):
         min_value = min(table_data[row_index][-1], table_data[-1][col_index])
 
         # Allocate the minimum value to the current cell
-        table_data[row_index][col_index] = min_value
+        new_matrice[row_index][col_index] = min_value
 
         # Update supply and demand
-        table_data[row_index][-1] -= min_value
-        table_data[-1][col_index] -= min_value
+        new_matrice[row_index][-1] -= min_value
+        new_matrice[-1][col_index] -= min_value
 
         # Move to the next row or column if supply or demand becomes zero
-        if table_data[row_index][-1] == 0:
+        if new_matrice[row_index][-1] == 0:
             row_index += 1
         else:
             col_index += 1
 
+        print("\nVoici row_index = ", row_index)
+        print("\nVoici col_index = ", col_index)
+
         # Display the updated table
-        display_table(table_data)
+        display_table(new_matrice)
+
+    # Return the updated matrix
+    return new_matrice
