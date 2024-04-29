@@ -124,7 +124,7 @@ def mini_row(table_data):
         min_row.append(min_value)
     return min_row
 
-def vogels_approximation_method(table_data):
+def max_difference(table_data):
     max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
     max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Provision)
     difference_colum = []
@@ -143,8 +143,17 @@ def vogels_approximation_method(table_data):
     difference_row = [max_row[i] - min_row[i] for i in range(max_rows)]
 
     # Find the maximum value from both the difference columns and difference rows
-    max_diff = max(max(difference_colum), max(difference_row))
-    
-    print("Maximum difference in columns and rows:", max_diff)
+    max_diff_col = max(difference_colum)
+    max_diff_row = max(difference_row)
+    max_diff = max(max_diff_col, max_diff_row)
 
+    # Determine if the maximum difference is from a column or a row
+    if max_diff_col > max_diff_row:
+        max_diff_type = 'column'
+        max_diff_index = difference_colum.index(max_diff_col)
+    else:
+        max_diff_type = 'row'
+        max_diff_index = difference_row.index(max_diff_row)
+    
+    return max_diff_type, max_diff_index, max_diff
 
