@@ -1,5 +1,6 @@
 import copy
 import random
+import time
 
 def read_table(filename):
     table_data = []
@@ -44,7 +45,7 @@ def display_table(table_data):
 def north_west_corner_method(table_data):
     max_rows = min(len(table_data) - 1, 100)  # Exclude the last row (Orders)
     max_columns = min(len(table_data[0]) - 1, 101)  # Exclude the last column (Orders)
-
+    start_time = time.time()  # start time before the loop
     # Initialize the indices for the northwest corner of the matrix
     row_index = 0
     col_index = 0
@@ -78,7 +79,9 @@ def north_west_corner_method(table_data):
 
         # Display the updated table
         display_table(new_matrice)
-
+    end_time = time.time()  # end time after the loop
+    theta_nw = end_time - start_time  # compute the execution time
+    print(f"Execution time is {theta_nw} secondes")
     # Return the updated matrix
     return new_matrice
 
@@ -178,7 +181,7 @@ def vogel(table_data):
     max_cols = len(table_data[0])-1
 
     alloc_table = create_alloc_table(table_data, max_rows, max_cols)
-
+    
     # Algorithm start
     do_loop = True
     while do_loop:
@@ -274,6 +277,7 @@ def vogel(table_data):
                 table_data[alloc_row][ind] = -1 # flag this entire row as it is now processed
 
         display_alloc_table(alloc_table)
+    
 
 def total_cost(table_data, table_penalties):
     max_rows = len(table_data) - 1
@@ -299,24 +303,24 @@ def generate_transportation_problem(size):
     last_row = 0
     for i in range (size):
         for j in range (size):
-            value = random.randint(1, 100)
+            value = random.randint(1, size*10)
             random_matrix[i][j] = value
             if j == size-1:
                 print(value)
                 last_column += value
     for i in range (size-1):
         
-        if last_column < 100 and i != size-2:
+        if last_column > 1 and last_column < 100 and i != size-2:
             value = random.randint(1, last_column)
             
-        elif last_column == 1:
-            value = random.randint(1, 100)
+        elif last_column <= 1:
+            value = 1
             
         elif i == size-2 and last_column != 0:
             
             value = last_column  
         else:
-            value = random.randint(1, 100)
+            value = random.randint(1, size*10)
         last_column = last_column - value
         last_row = last_row + value
         
