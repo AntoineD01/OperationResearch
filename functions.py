@@ -42,8 +42,8 @@ def display_table(table_data):
 
 
 def north_west_corner_method(table_data):
-    max_rows = min(len(table_data) - 1, 21)  # Exclude the last row (Orders)
-    max_columns = min(len(table_data[0]) - 1, 13)  # Exclude the last column (Orders)
+    max_rows = min(len(table_data) - 1, 100)  # Exclude the last row (Orders)
+    max_columns = min(len(table_data[0]) - 1, 101)  # Exclude the last column (Orders)
 
     # Initialize the indices for the northwest corner of the matrix
     row_index = 0
@@ -203,8 +203,8 @@ def vogel(table_data):
             col_diffs[col] = col_diff(col_data)
             row_ind +=1
 
-        print ("Row-diffs => ",row_diffs)
-        print ("Col-diffs => ",col_diffs)
+        #print ("Row-diffs => ",row_diffs)
+        #print ("Col-diffs => ",col_diffs)
 
         # Now identify the max between rows diff and cols diff
         max_rows_diff = max(row_diffs)
@@ -295,13 +295,31 @@ def total_cost(table_data, table_penalties):
 
 def generate_transportation_problem(size):
     random_matrix = [[0 for _ in range(size)] for _ in range(size)] + [[0 for _ in range(size - 1)]]
-
+    last_column = 0
+    last_row = 0
     for i in range (size):
         for j in range (size):
             value = random.randint(1, 100)
             random_matrix[i][j] = value
-    
+            if j == size-1:
+                print(value)
+                last_column += value
     for i in range (size-1):
-        value = random.randint(1, 100)
+        
+        if last_column < 100 and i != size-2:
+            value = random.randint(1, last_column)
+            
+        elif last_column == 1:
+            value = random.randint(1, 100)
+            
+        elif i == size-2 and last_column != 0:
+            
+            value = last_column  
+        else:
+            value = random.randint(1, 100)
+        last_column = last_column - value
+        last_row = last_row + value
+        
         random_matrix[size][i] = value
+   
     return random_matrix
