@@ -1,4 +1,5 @@
 import copy
+import random
 
 def read_table(filename):
     table_data = []
@@ -16,8 +17,8 @@ def read_table(filename):
     return table_data
 
 def display_table(table_data):
-    max_rows = min(len(table_data), 21)  # Include the last row (Orders)
-    max_columns = min(len(table_data[0]), 13)
+    max_rows = min(len(table_data), 101)  # Include the last row (Orders)
+    max_columns = min(len(table_data[0]), 101)
 
     # Display column headers
     print('\n\n          ', end='')  
@@ -288,3 +289,19 @@ def total_cost(table_data, table_penalties):
 
     print(f'Total cost: {total_cost}')
     return total_cost
+
+
+""" Part 3 """
+
+def generate_transportation_problem(size):
+    random_matrix = [[0 for _ in range(size)] for _ in range(size)] + [[0 for _ in range(size - 1)]]
+
+    for i in range (size):
+        for j in range (size):
+            value = random.randint(1, 100)
+            random_matrix[i][j] = value
+    
+    for i in range (size-1):
+        value = random.randint(1, 100)
+        random_matrix[size][i] = value
+    return random_matrix
