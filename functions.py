@@ -273,3 +273,18 @@ def vogel(table_data):
                 table_data[alloc_row][ind] = -1 # flag this entire row as it is now processed
 
         display_alloc_table(alloc_table)
+
+def total_cost(table_data, table_penalties):
+    max_rows = len(table_data) - 1
+    max_cols = len(table_data[0]) - 1
+
+    total_cost = 0
+    for row in range(max_rows):
+        for col in range(max_cols):
+            allocation = table_data[row][col]
+            penalty = table_penalties[row][col]
+            if allocation > 0:
+                total_cost += allocation * penalty
+
+    print(f'Total cost: {total_cost}')
+    return total_cost
